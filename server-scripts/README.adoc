@@ -1,0 +1,47 @@
+== Purge Logs and Git History
+
+From: https://stackoverflow.com/questions/13716658/how-to-delete-all-commit-history-in-github
+
+To keep the code you have in the current master branch but purge all history:
+
+```
+git fetch --all
+git checkout master
+git checkout --orphan latest_master
+rm <All the log directories you do not want to keep)>
+git add -A
+git commit -m "the current files"
+git branch -D master
+git branch -m master
+git push -f origin master
+git branch --set-upstream-to=origin/master master
+git gc
+```
+
+== CSR Approvals
+
+Sometimes after a cluster is installed, the worker nodes are not added. You need to approve the CSRs.
+
+To see the pending CSRs:
+
+```
+oc get csr | grep Pending
+```
+
+To approve all CSRs that are pending:
+
+```
+for csr in $(oc get csr | grep Pending | awk '{print $1}'); do oc adm certificate approve $csr; done
+```
+
+== Get Worker Nodes To Enter Ready State
+
+Sometimes the worker nodes fail to enter Ready state. If this happens, look at the node yaml status field and see if it says something about "Network plugin returns error: No CNI configuration file in /etc/kubernetes/cni/net.d/. Has your network provider started?" If so, do the following:
+
+Look at the pods in the `openshift-multus` and `openshift-dns` namespaces - delete any pods not in "Running" state but older than about 10 or 15 minutes:
+
+```
+oc get pods -n openshift-multus
+oc get pods -n openshift-dn
+```
+
