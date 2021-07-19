@@ -34,4 +34,5 @@ done
 
 # EXECUTE!
 
+echo "Starting at $(date)"
 sudo ${INSTALL_CMD}
