@@ -11,11 +11,13 @@ DO_NOT_PUSH="true"
 DRY_RUN="false"
 GITREPO_DIRECTORY="/tmp/KIALI-GIT/kiali-molecule-test-logs"
 NUM_KEEP_DIRECTORIES="10"
+BRANCH_NAME="master"
 
 while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
     -dnp|--do-not-push)           DO_NOT_PUSH="$2"           ;shift;shift;;
+    -bn|--branch-name)            BRANCH_NAME="$2"           ;shift;shift;;
     -dp|--dir-pattern)            DIR_PATTERN="$2"           ;shift;shift;;
     -dr|--dry-run)                DRY_RUN="$2"               ;shift;shift;;
     -gr|--git-repo)               GITREPO_DIRECTORY="$2"     ;shift;shift;;
@@ -68,12 +70,12 @@ cd ${GITREPO_DIRECTORY}
 
 if [ "${DRY_RUN}" == "true" ]; then
   echo "DRY RUN: git fetch --all"
-  echo "DRY RUN: git checkout master"
-  echo "DRY RUN: git checkout --orphan latest_master"
+  echo "DRY RUN: git checkout ${BRANCH_NAME}"
+  echo "DRY RUN: git checkout --orphan latest_${BRANCH_NAME}"
 else
   git fetch --all
-  git checkout master
-  git checkout --orphan latest_master
+  git checkout ${BRANCH_NAME}
+  git checkout --orphan latest_${BRANCH_NAME}
 fi
 
 ALL_DIRECTORIES=($(ls -1dt ${GITREPO_DIRECTORY}/${DIR_PATTERN}))
@@ -94,23 +96,23 @@ done
 
 if [ "${DRY_RUN}" == "true" ]; then
   echo "DRY RUN: git commit -m 'the current files'"
-  echo "DRY RUN: git branch -D master"
-  echo "DRY RUN: git branch -m master"
+  echo "DRY RUN: git branch -D ${BRANCH_NAME}"
+  echo "DRY RUN: git branch -m ${BRANCH_NAME}"
 else
   git commit -m 'the current files'
-  git branch -D master
-  git branch -m master
+  git branch -D ${BRANCH_NAME}
+  git branch -m ${BRANCH_NAME}
 fi
 
 if [ "${DO_NOT_PUSH}" == "true" ]; then
   echo "The results will NOT be pushed to the remote repo."
   echo "At this point you should do the following:"
   echo "  cd ${GITREPO_DIRECTORY}"
-  echo "  git push -f origin master"
-  echo "  git branch --set-upstream-to=origin/master master"
+  echo "  git push -f origin ${BRANCH_NAME}"
+  echo "  git branch --set-upstream-to=origin/${BRANCH_NAME} ${BRANCH_NAME}"
   echo "  git gc"
 else
-  git push -f origin master
-  git branch --set-upstream-to=origin/master master
+  git push -f origin ${BRANCH_NAME}
+  git branch --set-upstream-to=origin/${BRANCH_NAME} ${BRANCH_NAME}
   git gc
 fi
