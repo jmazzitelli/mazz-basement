@@ -57,6 +57,7 @@ fi
 
 echo
 echo "===== SETTINGS ====="
+echo BRANCH_NAME=$BRANCH_NAME
 echo DIR_PATTERN=$DIR_PATTERN
 echo DO_NOT_PUSH=$DO_NOT_PUSH
 echo DRY_RUN=$DRY_RUN
