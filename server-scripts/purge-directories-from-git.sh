@@ -26,6 +26,7 @@ while [[ $# -gt 0 ]]; do
       cat <<HELPMSG
 
 Valid command line arguments:
+  -bn|--branch-name <name>: The name of the branch to purge.
   -dnp|--do-not-push <true|false>: If "true" do not push the results to the remote repo. This is a safety measure allowing you to double check before pushing manually.
   -dp|--dir-pattern <glob pattern>: When searching for directories in the git repo, this is the glob pattern used.
   -dr|--dry-run <true|false>: If "true" do not purge anything; otherwise purge as usual.
