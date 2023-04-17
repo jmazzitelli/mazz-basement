@@ -45,3 +45,18 @@ oc get pods -n openshift-multus
 oc get pods -n openshift-dn
 ```
 
+== crontab
+
+```crontab
+# EVERY 2am RUN THE TESTS
+0 2 * * * /home/jmazzite/source/kiali/hack/ci-openshift-molecule-tests.sh -rr true -lb openshift -dorp podman -ir kiali -ul true > /tmp/KIALI-TESTS.log 2>&1 && /home/jmazzite/source/mazz-basement/server-scripts/purge-directories-from-git.sh --do-not-push false -bn openshift >> /tmp/KIALI-TESTS.log 2>&1
+
+#0 2 * * * /home/jmazzite/source/kiali/hack/ci-openshift-molecule-tests.sh -rr true -dorp podman -ir kiali -ul true -kf jmazzitelli -kof jmazzitelli -hf jmazzitelli -kb BRANCH_NAME -kob OPERATOR_BRANCH_NAME -hb HELM_BRANCH_NAME > /tmp/KIALI-TESTS.log 2>&1
+
+#0 2 * * * /home/jmazzite/source/kiali/hack/ci-openshift-molecule-tests.sh -rr true -dorp podman -ir kiali -ul true -kf jmazzitelli -kof jmazzitelli -kb BRANCH_NAME -kob OPERATOR_BRANCH_NAME > /tmp/KIALI-TESTS.log 2>&1
+
+#0 2 * * * /home/jmazzite/source/kiali/hack/ci-openshift-molecule-tests.sh -rr true -dorp podman -ir kiali -ul true -kof jmazzitelli -kob OPERATOR_BRANCH_NAME > /tmp/KIALI-TESTS.log 2>&1
+
+# 2am everyday: test OSSM 2.2 installed via OLM. Must install OSSM operators first and OSSM SMCP:
+#0 2 * * * /home/jmazzite/source/kiali/hack/ci-openshift-molecule-tests.sh -rr true -lb openshift -dorp podman -ir kiali -ul true --install-istio false --kiali-branch v1.48 --kiali-operator-branch v1.48 --operator-installer skip --spec-version v1.48 --use-default-server-image true > /tmp/KIALI-TESTS.log 2>&1 && /home/jmazzite/source/mazz-basement/server-scripts/purge-directories-from-git.sh --do-not-push false -bn openshift >> /tmp/KIALI-TESTS.log 2>&1
+```
