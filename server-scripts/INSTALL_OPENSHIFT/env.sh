@@ -6,7 +6,7 @@
 
 MASTERS="3"
 WORKERS="0"
-OPENSHIFT_VERSION="4.12.2"
+OPENSHIFT_VERSION="4.12.17"
 
 SCRIPT_DIR="${HOME}/source/ocp4_setup_upi_kvm"
 SCRIPT_EXE="${SCRIPT_DIR}/ocp4_setup_upi_kvm.sh"
