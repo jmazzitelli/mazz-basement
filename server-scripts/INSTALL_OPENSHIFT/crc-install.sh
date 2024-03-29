@@ -12,9 +12,11 @@ PULL_SECRET_ARG="-p ${PULL_SECRET_FILE}"
 
 if [ ! -f "${PULL_SECRET_FILE}" ]; then
   echo "WARNING: There is no pull secret file at [${PULL_SECRET_FILE}]."
-  echo "WARNING: Will start CRC without specifying a pull secret."
-  echo "WARNING: You will need to enter it manually when the CRC startup script asks for it."
+  echo "WARNING: You would need to enter it manually when the CRC startup script asks for it."
   PULL_SECRET_ARG=""
+
+  # this script is run by cron - not reason to keep going since the script will need the pull secret
+  exit 1
 fi
 
 echo "====Installing CRC"
