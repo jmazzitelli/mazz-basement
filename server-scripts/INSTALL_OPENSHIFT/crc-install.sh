@@ -15,7 +15,7 @@ if [ ! -f "${PULL_SECRET_FILE}" ]; then
   echo "WARNING: You would need to enter it manually when the CRC startup script asks for it."
   PULL_SECRET_ARG=""
 
-  # this script is run by cron - not reason to keep going since the script will need the pull secret
+  # this script is run by cron - no reason to keep going since the script will need the pull secret
   exit 1
 fi
 
