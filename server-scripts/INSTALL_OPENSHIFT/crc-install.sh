@@ -20,7 +20,7 @@ if [ ! -f "${PULL_SECRET_FILE}" ]; then
 fi
 
 echo "====Installing CRC"
-./hack/crc-openshift.sh --crc-cpus 8 --crc-memory 64 --crc-virtual-disk-size 64 ${PULL_SECRET_ARG} start
+./hack/crc-openshift.sh --crc-cpus 8 --crc-memory 96 --crc-virtual-disk-size 64 ${PULL_SECRET_ARG} start
 
 echo "====Installing Istio"
 ./hack/istio/install-istio-via-istioctl.sh -c ${HOME}/bin/oc
