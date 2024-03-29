@@ -1,6 +1,8 @@
 #!/bin/bash
 
-echo "Pulling the latest kiali source code"
+set -e
+
+echo "====Pulling the latest Kiali source code"
 cd ${HOME}/source/kiali
 git pull
 
@@ -15,4 +17,8 @@ if [ ! -f "${PULL_SECRET_FILE}" ]; then
   PULL_SECRET_ARG=""
 fi
 
+echo "====Installing CRC"
 ./hack/crc-openshift.sh --crc-cpus 8 --crc-memory 64 --crc-virtual-disk-size 64 ${PULL_SECRET_ARG} start
+
+echo "====Installing Istio"
+./hack/istio/install-istio-via-istioctl.sh -c ${HOME}/bin/oc
