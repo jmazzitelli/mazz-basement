@@ -78,9 +78,15 @@ EOF
 sudo cp /tmp/haproxy.cfg.crc /etc/haproxy/haproxy.cfg
 sudo systemctl restart haproxy
 
-echo "====="
-echo "Client machines need to have their /etc/hosts refer to the following:"
-echo
-echo "${SERVER_IP}  apps-crc.testing api.crc.testing console-openshift-console.apps-crc.testing default-route-openshift-image-registry.apps-crc.testing oauth-openshift.apps-crc.testing"
+cat <<MSG
 
-echo
+Client machines need to have their /etc/hosts refer to the following:
+
+${SERVER_IP}     api.crc.testing
+${SERVER_IP}     apps-crc.testing
+${SERVER_IP}     oauth-openshift.apps-crc.testing
+${SERVER_IP}     console-openshift-console.apps-crc.testing
+${SERVER_IP}     default-route-openshift-image-registry.apps-crc.testing
+${SERVER_IP}     kiali-istio-system.apps-crc.testing
+${SERVER_IP}     prometheus-istio-system.apps-crc.testing
+MSG
