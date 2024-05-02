@@ -22,5 +22,8 @@ fi
 echo "====Installing CRC"
 ./hack/crc-openshift.sh --crc-cpus 8 --crc-memory 96 --crc-virtual-disk-size 64 ${PULL_SECRET_ARG} start
 
+echo "====Log into OpenShift"
+${HOME}/bin/oc login -u kiali -p kiali --server https://api.crc.testing:6443
+
 echo "====Installing Istio"
 ./hack/istio/install-istio-via-istioctl.sh -c ${HOME}/bin/oc
