@@ -20,7 +20,7 @@ if [ ! -f "${PULL_SECRET_FILE}" ]; then
 fi
 
 echo "====Installing CRC"
-./hack/crc-openshift.sh --crc-cpus 8 --crc-memory 96 --crc-virtual-disk-size 64 ${PULL_SECRET_ARG} start
+./hack/crc-openshift.sh --hydra-enabled true --crc-cpus 8 --crc-memory 96 --crc-virtual-disk-size 64 ${PULL_SECRET_ARG} start
 
 echo "====Log into OpenShift"
 for i in {1..10}; do
